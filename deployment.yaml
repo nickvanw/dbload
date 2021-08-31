@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ps-dbload
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: ps-dbload
+  template:
+    metadata:
+      labels:
+        app: ps-dbload
+    spec:
+      containers:
+      - name: dbload
+        image: registry.digitalocean.com/ps-demo-registry/dbload:2
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: url
