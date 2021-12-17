@@ -13,10 +13,19 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+/*
+CREATE TABLE `data` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `host` varchar(100) DEFAULT NULL,
+  `data` varchar(100) DEFAULT NULL,
+  `now` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+*/
 var query string = "INSERT INTO data (host, data) VALUES (?, ?)"
 
 func main() {
-	if err := realMain(30*time.Second, 25); err != nil {
+	if err := realMain(5*time.Second, 25); err != nil {
 		fmt.Printf("error running realMain: %s\n", err)
 		os.Exit(1)
 	}
@@ -35,7 +44,12 @@ func realMain(delay time.Duration, parallelism int) error {
 
 	for i := 0; i < parallelism; i++ {
 		fmt.Printf("launching insert loop %d\n", i)
-		go insertLoop(delay, dsn, h)
+		go func() {
+			if err := insertLoop(delay, dsn, h); err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+		}()
 	}
 
 	done := make(chan struct{})
