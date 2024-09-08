@@ -114,15 +114,22 @@ func randData(n int) string {
 }
 
 func bench(input chan int64) {
-	var total int64
-	var num int64
+	var max, min, total, num int64
 	for {
 		bench := <-input
 		total += bench
 		num += 1
 
-		if num%100 == 0 {
-			fmt.Printf("total inserts: %d, avg time: %dms\n", num, total/num)
+		if bench > max {
+			max = bench
 		}
+		if bench < min || min == 0 {
+			min = bench
+		}
+
+		if num%100 == 0 {
+			fmt.Printf("total inserts: %d, avg time: %dms, max: %dms, min: %dms\n", num, total/num, max, min)
+		}
+
 	}
 }
