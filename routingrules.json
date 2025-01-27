@@ -1,0 +1,6 @@
+{"rules": [
+  {
+    "from_table": "data",
+    "to_tables": ["sharded.data"]
+  }
+]}

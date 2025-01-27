@@ -15,10 +15,10 @@ spec:
     spec:
       containers:
       - name: dbload
-        image: registry.digitalocean.com/ps-demo-registry/dbload:2
+        image: registry.digitalocean.com/import-registry/dbload:go-2
         env:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: database
+              name: ps-database
               key: url

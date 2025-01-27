@@ -1,0 +1,32 @@
+{
+  "sharded": true,
+  "vindexes": {
+    "hash": {
+      "type": "hash"
+    }
+  },
+  "tables": {
+    "data": {
+      "column_vindexes": [
+        {
+          "column": "id",
+          "name": "hash"
+        }
+      ],
+      "auto_increment": {
+        "column": "id",
+        "sequence": "sharded.user_seq"
+      }
+    }
+  }
+}
+
+// lookup keyspace
+{
+  "sharded": false,
+  "tables": {
+    "user_seq": {
+      "type": "sequence"
+    }
+  }
+}

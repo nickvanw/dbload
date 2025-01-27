@@ -15,17 +15,19 @@ import (
 
 /*
 CREATE TABLE `data` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `host` varchar(100) DEFAULT NULL,
-  `data` varchar(100) DEFAULT NULL,
-  `now` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+
+	`id` int NOT NULL AUTO_INCREMENT,
+	`host` varchar(100) DEFAULT NULL,
+	`data` varchar(100) DEFAULT NULL,
+	`now` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 */
 var query string = "INSERT INTO data (host, data) VALUES (?, ?)"
 
 func main() {
-	if err := realMain(5*time.Second, 25); err != nil {
+	if err := realMain(500*time.Millisecond, 10); err != nil {
 		fmt.Printf("error running realMain: %s\n", err)
 		os.Exit(1)
 	}
